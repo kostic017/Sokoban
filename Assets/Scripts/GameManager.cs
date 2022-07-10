@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
             if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
                 StartCoroutine(LoadSceneAfterDelay(nextSceneIndex, 2f));
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     bool IsWin()

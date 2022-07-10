@@ -3,9 +3,9 @@ using UnityEngine.Tilemaps;
 
 public class Crate : MonoBehaviour
 {
-    public Tilemap walls;
-
-    public Sprite placedCrateSprite;
+public Sprite placedCrateSprite;
+    
+    private Tilemap walls;
 
     private SpriteRenderer spriteRenderer;
 
@@ -19,6 +19,7 @@ public class Crate : MonoBehaviour
     {
         crates = FindObjectsOfType<Crate>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        walls = GameObject.Find("Walls").GetComponent<Tilemap>();
         crateSprite = spriteRenderer.sprite;
     }
 

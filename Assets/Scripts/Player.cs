@@ -3,13 +3,14 @@ using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
-    public Tilemap walls;
+    private Tilemap walls;
 
     private Crate[] crates;
 
     void Start()
     {
         crates = FindObjectsOfType<Crate>();
+        walls = GameObject.Find("Walls").GetComponent<Tilemap>();
     }
 
     void Update()
