@@ -4,10 +4,12 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+    private Player player;
     private Crate[] crates;
 
     void Start()
     {
+        player = FindObjectOfType<Player>();
         crates = FindObjectsOfType<Crate>();
     }
 
@@ -22,6 +24,9 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        if (Input.GetKeyDown(KeyCode.U))
+            player.Undo();
     }
 
     bool IsWin()

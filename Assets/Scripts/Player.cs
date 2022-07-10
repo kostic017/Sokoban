@@ -1,11 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
-{
+{   
+
+    struct MoveInfo
+    {
+        public Vector3 from;
+        public Vector3 to;
+        public Crate crate;
+    }
+
     private Tilemap walls;
 
     private Crate[] crates;
+
+    private readonly Stack<MoveInfo> moves = new();
 
     void Start()
     {
@@ -32,11 +43,35 @@ public class Player : MonoBehaviour
 
         if (walls.HasTile(cell))
             return;
-        
+
+        var moveInfo = new MoveInfo();
+
         foreach (var crate in crates)
-            if (crate.transform.position == position && !crate.Move(direction))
-                return;
-        
+        {
+            if (crate.transform.position == position)
+            {
+                if (!crate.Move(direction))
+                    return;
+                moveInfo.crate = crate;
+            }
+        }
+
+        moveInfo.from = transform.position;
+        moveInfo.to = position;
+        moves.Push(moveInfo);
+
         transform.position = position;
     }
+
+    public void Undo()
+    {
+        if (moves.Count > 0)
+        {
+            var moveInfo = moves.Pop();
+            transform.position = moveInfo.from;
+            if (moveInfo.crate != null)
+                moveInfo.crate.transform.position = moveInfo.to;
+        }
+    }
+
 }
