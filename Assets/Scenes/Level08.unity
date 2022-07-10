@@ -1377,6 +1377,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7525882302791321207, guid: 015fa83d90cb0814ba49393ebd85f062, type: 3}
+      propertyPath: solution
+      value: URLDDRURRDLRDRRULLUUURRDLDLDDRRULULLLLUURDLDRRLLDDRULUR
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525882302791321207, guid: 015fa83d90cb0814ba49393ebd85f062, type: 3}
+      propertyPath: nextMoveDelay
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 015fa83d90cb0814ba49393ebd85f062, type: 3}
 --- !u!1 &1602379349
@@ -1989,7 +1997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 936568013369514168, guid: 431456f6f69640242b2ba38c5e973d08, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 936568013369514168, guid: 431456f6f69640242b2ba38c5e973d08, type: 3}
       propertyPath: m_LocalPosition.z

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -43,9 +44,8 @@ public Sprite placedCrateSprite;
         if (walls.HasTile(cell))
             return false;
 
-        foreach (var crate in crates)
-            if (crate.transform.position == position)
-                return false;
+        if (crates.Any(crate => crate.transform.position == position))
+            return false;
 
         transform.position = position;
         return true;

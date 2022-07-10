@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour
             Move(Vector3.right);
     }
 
-    void Move(Vector3 direction)
+    public void Move(Vector3 direction)
     {
         var position = transform.position + direction;
         var cell = walls.WorldToCell(position);
@@ -45,33 +46,30 @@ public class Player : MonoBehaviour
             return;
 
         var moveInfo = new MoveInfo();
+        var crate = crates.FirstOrDefault(crate => crate.transform.position == position);
 
-        foreach (var crate in crates)
-        {
-            if (crate.transform.position == position)
-            {
-                if (!crate.Move(direction))
-                    return;
-                moveInfo.crate = crate;
-            }
-        }
+        if (crate != null && !crate.Move(direction))
+            return;
 
         moveInfo.from = transform.position;
         moveInfo.to = position;
+        moveInfo.crate = crate;
         moves.Push(moveInfo);
 
         transform.position = position;
     }
 
-    public void Undo()
+    public bool Undo()
     {
-        if (moves.Count > 0)
-        {
-            var moveInfo = moves.Pop();
-            transform.position = moveInfo.from;
-            if (moveInfo.crate != null)
-                moveInfo.crate.transform.position = moveInfo.to;
-        }
+        if (moves.Count == 0)
+            return false;
+     
+        var moveInfo = moves.Pop();
+        transform.position = moveInfo.from;
+        if (moveInfo.crate != null)
+            moveInfo.crate.transform.position = moveInfo.to;
+
+        return true;
     }
 
 }

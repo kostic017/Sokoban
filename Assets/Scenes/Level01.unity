@@ -1807,5 +1807,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7525882302791321207, guid: 015fa83d90cb0814ba49393ebd85f062, type: 3}
+      propertyPath: solution
+      value: DULLRUUDRR
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525882302791321207, guid: 015fa83d90cb0814ba49393ebd85f062, type: 3}
+      propertyPath: nextMoveDelay
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 015fa83d90cb0814ba49393ebd85f062, type: 3}

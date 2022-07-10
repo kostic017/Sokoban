@@ -1,10 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
+    public string solution;
+
+    public float nextMoveDelay = 0.5f;
+
+    public float nextLevelDelay = 1f;
+
     private Player player;
+
     private Crate[] crates;
 
     void Start()
@@ -15,34 +23,55 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (IsWin())
-        {
-            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
-                StartCoroutine(LoadSceneAfterDelay(nextSceneIndex, 2f));
-        }
-
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         if (Input.GetKeyDown(KeyCode.U))
             player.Undo();
+
+        if (solution != "" && Input.GetKeyDown(KeyCode.H))
+            StartCoroutine(Solve());
+
+        if (IsWin())
+        {
+            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
+                StartCoroutine(LoadSceneAfterDelay(nextSceneIndex));
+        }
     }
 
     bool IsWin()
     {
-        foreach (var crate in crates)
-            if (!crate.isPlaced)
-                return false;
-        return true;
+        return !crates.Any(crate => !crate.isPlaced);
     }
 
-    IEnumerator LoadSceneAfterDelay(int buildIndex, float delay)
+    IEnumerator Solve()
     {
-        if (delay > 0)
-            yield return new WaitForSeconds(delay);
+        while (player.Undo()) ;
+        foreach (var ch in solution)
+        {
+            yield return new WaitForSeconds(nextMoveDelay);
+            switch (ch)
+            {
+                case 'U':
+                    player.Move(Vector3.up);
+                    break;
+                case 'D':
+                    player.Move(Vector3.down);
+                    break;
+                case 'L':
+                    player.Move(Vector3.left);
+                    break;
+                case 'R':
+                    player.Move(Vector3.right);
+                    break;
+            }
+        }
+    }
 
+    IEnumerator LoadSceneAfterDelay(int buildIndex)
+    {
+        yield return new WaitForSeconds(nextLevelDelay);
         SceneManager.LoadScene(buildIndex);
-        yield break;
     }
 }
