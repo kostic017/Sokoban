@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         var moveInfo = moves.Pop();
         transform.position = moveInfo.from;
         if (moveInfo.crate != null)
-            moveInfo.crate.transform.position = moveInfo.to;
+            moveInfo.crate.Undo(moveInfo.to);
 
         return true;
     }
