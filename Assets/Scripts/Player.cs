@@ -17,11 +17,14 @@ public class Player : MonoBehaviour
 
     private Crate[] crates;
 
+    private AudioSource audioSource;
+
     private readonly Stack<MoveInfo> moves = new();
 
     void Start()
     {
         crates = FindObjectsOfType<Crate>();
+        audioSource = GetComponent<AudioSource>();
         walls = GameObject.Find("Walls").GetComponent<Tilemap>();
     }
 
@@ -57,6 +60,7 @@ public class Player : MonoBehaviour
         moves.Push(moveInfo);
 
         transform.position = position;
+        audioSource.Play();
     }
 
     public bool Undo()

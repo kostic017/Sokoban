@@ -15,10 +15,13 @@ public class GameManager : MonoBehaviour
 
     private Crate[] crates;
 
+    private AudioSource audioSource;
+
     void Start()
     {
         player = FindObjectOfType<Player>();
         crates = FindObjectsOfType<Crate>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -29,11 +32,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
             player.Undo();
 
-        if (solution != "" && Input.GetKeyDown(KeyCode.H))
+        if (solution != string.Empty && Input.GetKeyDown(KeyCode.H))
             StartCoroutine(Solve());
 
-        if (IsWin())
+        if (IsWin() && !audioSource.isPlaying)
         {
+            audioSource.Play();
             int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
             if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
                 StartCoroutine(LoadSceneAfterDelay(nextSceneIndex));
